@@ -1,0 +1,356 @@
+:root {
+    --bg: #111;
+    --card-bg: #1c1c1c;
+    --text: #f0f0f0;
+    --accent: #00d9ff;
+    --sec: #ff005c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    padding: 1rem;
+}
+
+header h1 .multi {
+    color: var(--sec);
+}
+
+header h1 .clocksTitle {
+    color: var(--accent);
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.controls button,
+.controls select,
+.controls label span {
+    background: var(--card-bg);
+    border: none;
+    padding: 0.5rem 1.7rem;
+    border-radius: 8px;
+    color: var(--text);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.controls button:hover,
+.controls select:hover {
+    background: var(--accent);
+    color: #000;
+}
+
+.clockPicker {
+    justify-content: space-evenly;
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+main.stage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 0 20px #0007;
+}
+
+
+/* Cascade Clock with bubbles */
+.cascade {
+    display: flex;
+    gap: 1rem;
+}
+
+.box {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.digit-container {
+    width: 80px;
+    height: 120px;
+    background: #222;
+    border-radius: 8px;
+    box-shadow: inset 0 0 6px #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.digit-column {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.4s ease-in-out;
+}
+
+.digit-bubble {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #287a89;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000;
+    box-shadow: 0 4px 8px rgba(0, 217, 255, 0.3);
+    flex-shrink: 0;
+    transform: scale(0.7);
+    transition: all 0.2s ease-in-out;
+}
+
+.digit-bubble.active {
+    background: var(--sec);
+    box-shadow: 0 6px 12px rgba(255, 0, 92, 0.6);
+    transform: scale(1.2);
+    opacity: 1;
+}
+
+.box:hover .digit-container {
+    background-color: #00d9ff1a;
+}
+
+.legend {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #aaa;
+    text-align: center;
+}
+
+/* Analog Clock */
+.analog {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    border: 8px solid var(--accent);
+    border-radius: 50%;
+}
+
+.analog .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: var(--sec);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.hand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom;
+    background: var(--text);
+}
+
+.hand.hour {
+    width: 6px;
+    height: 55px;
+    border-radius: 6px;
+}
+
+.hand.min {
+    width: 4px;
+    height: 75px;
+    border-radius: 4px;
+    background: var(--accent);
+}
+
+.hand.sec {
+    width: 2px;
+    height: 100px;
+    border-radius: 2px;
+    background: var(--sec);
+}
+
+
+
+/* Hour marks */
+.hour-mark {
+    position: absolute;
+    width: 3px;
+    height: 20px;
+    background: var(--accent);
+    top: 8px;
+    left: 50%;
+    transform-origin: 50% 117px;
+    transform: translateX(-50%);
+}
+
+.hour-mark.twelve {
+    transform: translateX(-50%) rotate(0deg);
+    background: var(--sec);
+    width: 4px;
+    height: 25px;
+    top: 5px;
+}
+
+.hour-mark.three {
+    transform: translateX(-50%) rotate(90deg);
+    background: var(--sec);
+    width: 4px;
+    height: 25px;
+    top: 5px;
+}
+
+.hour-mark.six {
+    transform: translateX(-50%) rotate(180deg);
+    background: var(--sec);
+    width: 4px;
+    height: 25px;
+    top: 7px;
+}
+
+.hour-mark.nine {
+    transform: translateX(-50%) rotate(270deg);
+    background: var(--sec);
+    width: 4px;
+    height: 25px;
+    top: 5px;
+}
+
+/* Minute marks */
+.minute-mark {
+    position: absolute;
+    width: 1px;
+    height: 10px;
+    background: #666;
+    top: 8px;
+    left: 50%;
+    transform-origin: 50% 117px;
+    transform: translateX(-50%);
+}
+
+/* Digital */
+.digital {
+    font-size: 5rem;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+footer {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+
+.semiColons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 20px;
+}
+
+.circleOne,
+.circleTwo {
+    width: 25px;
+    height: 25px;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: inset 0 0 6px #000;
+    transition: transform 0.2s;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.gitHub-btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #24292f;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.gitHub-btn-link:hover,
+.gitHub-btn-link:focus {
+    background-color: var(--accent);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    outline: none;
+}
+
+.gitHub-btn-link svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    fill: currentColor;
+    transition: transform 0.2s ease-in-out;
+}
+
+.gitHub-btn-link:hover svg {
+    transform: scale(1.1);
+}
+
+.gitHub-btn-text {
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+@media (max-width: 500px) {
+    .gitHub-btn-link {
+        padding: 0.4rem 0.8rem;
+        gap: 0.4rem;
+    }
+
+    .gitHub-btn-text {
+        font-size: 0.8rem;
+    }
+
+    .gitHub-btn-link svg {
+        width: 1rem;
+        height: 1rem;
+    }
+}
